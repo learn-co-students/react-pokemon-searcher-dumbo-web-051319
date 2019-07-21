@@ -20,7 +20,7 @@ class PokemonForm extends React.Component {
         <Form onSubmit={this.handleSubmit}>
           <Form.Group widths="equal">
             <Form.Input fluid label="Name" placeholder="Name" name="name" />
-            <Form.Input fluid label="hp" placeholder="hp" name="hp" />
+            <Form.Input fluid label="H P" placeholder="hp" name="hp" />
             <Form.Input fluid label="Front Image URL" placeholder="url" name="frontUrl" />
             <Form.Input fluid label="Back Image URL" placeholder="url" name="backUrl" />
           </Form.Group>
