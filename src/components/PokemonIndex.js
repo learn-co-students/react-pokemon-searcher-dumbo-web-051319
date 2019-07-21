@@ -60,6 +60,56 @@ class PokemonPage extends React.Component {
     console.log(this.state.pokemon)
   }
 
+  fetchPostPokemon = (pokeboi) => {
+    // debugger
+    let protoObj = {
+      "height": 0,
+      "weight": 0,
+      "id": 0,
+      "name": "",
+      "sprites": {front: "", back: ""},
+      "abilities": [""],
+      "moves": [],
+      "stats": [
+        {
+          "value": 0,
+          "name": "special-defense"
+        },
+        {
+          "value": 0,
+          "name": "special-attack"
+        },
+        {
+          "value": 0,
+          "name": "defense"
+        },
+        {
+          "value": 0,
+          "name": "attack"
+        },
+        {
+          "value": 0,
+          "name": "speed"
+        },
+        {
+          "value": 0,
+          "name": "hp"
+        }]
+      }
+
+      protoObj.name = pokeboi.name
+      protoObj.sprites = {front: pokeboi.frontUrl, back: pokeboi.backUrl}
+      protoObj.stats[5] = {"value": pokeboi.hp, "name": "hp"}
+      fetch('http://localhost:3000/pokemon', {
+        method: "POST",
+        headers: {"Content-Type": 'application/json'},
+        body: JSON.stringify(protoObj)
+      })
+        .then(() => {
+          this.setAllPokemonToState()
+        })
+  }
+
   changeStateOnSearch = (e) => {
     let query = document.querySelector('.ui.icon.input').firstChild.value
     if(query === "") {
@@ -90,9 +140,9 @@ class PokemonPage extends React.Component {
           // <Input />
         />
         <br />
-        <PokemonCollection pokemon={this.state.pokemon} />
+        <PokemonForm fetchPostPokemon={this.fetchPostPokemon} />
         <br />
-        <PokemonForm />
+        <PokemonCollection pokemon={this.state.pokemon} />
       </div>
     )
   }

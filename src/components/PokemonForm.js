@@ -13,6 +13,16 @@ class PokemonForm extends React.Component {
     }
   }
 
+  handleSubmit = (e) => {
+    let formDivs = Array.prototype.slice.call(e.target.firstChild.children)
+    let newPokeboi = {}
+    formDivs.forEach((div) => {
+      newPokeboi[div.children[1].firstChild.name] = div.children[1].firstChild.value
+    })
+    this.props.fetchPostPokemon(newPokeboi)
+    // debugger
+  }
+
   render() {
     return (
       <div>
