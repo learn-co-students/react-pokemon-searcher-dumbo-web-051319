@@ -4,24 +4,19 @@ import { Card } from 'semantic-ui-react'
 
 class PokemonCollection extends React.Component {
 
-  // state = {pokemenon: []}
-
-  componentDidMount() {
+  displayPokebois = () => {
+    this.props.pokemon
     // debugger
-    // console.log(this)
-    // fetch('http://localhost:3000/pokemon')
-    //   .then((respo) => respo.json())
-    //     .then((json) => this.setState({json}))
+    return this.props.pokemon.map((poke) => {
+      return <PokemonCard data={poke} changeStateOnSearch={this.props.changeStateOnSearch}/>
+    })
+
   }
-
-  // displayPokebois = () => {
-    // debugger
-  // }
-  // {this.displayPokebois()}
 
   render() {
     return (
       <Card.Group itemsPerRow={6}>
+        {this.displayPokebois()}
       </Card.Group>
     )
   }
