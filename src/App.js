@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PokemonIndex from './components/PokemonIndex'
 import './App.css'
 
-const App = () => (
-  <div className="App">
-    <PokemonIndex />
-  </div>
-)
 
-export default App
+export default class App extends Component {
+
+  render() {
+    return (
+      <div className="App">
+        <PokemonIndex />
+      </div>
+    )
+  }
+  
+}
