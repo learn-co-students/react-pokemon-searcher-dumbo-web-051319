@@ -3,61 +3,49 @@ import PokemonCollection from './PokemonCollection'
 import PokemonForm from './PokemonForm'
 import { Search } from 'semantic-ui-react'
 import _ from 'lodash'
+import Filter from './Filter.js';
 
 class PokemonPage extends React.Component {
 
-  state = {pokemon: [
-    {
-      "height": 0,
-      "weight": 0,
-      "id": 0,
-      "name": "",
-      "sprites": {front: "", back: ""},
-      "abilities": [""],
-      "moves": [],
-      "stats": [
-        {
-          "value": 0,
-          "name": "special-defense"
-        },
-        {
-          "value": 0,
-          "name": "special-attack"
-        },
-        {
-          "value": 0,
-          "name": "defense"
-        },
-        {
-          "value": 0,
-          "name": "attack"
-        },
-        {
-          "value": 0,
-          "name": "speed"
-        },
-        {
-          "value": 0,
-          "name": "hp"
-        }]
-      }]
-    }
-
+  state = {
+    allPokemon: [],
+    pokemon: []
+  }
 
   componentDidMount() {
     fetch('http://localhost:3000/pokemon')
       .then((respo) => respo.json())
-        .then((json) => this.setState({pokemon: json}))
+        .then((json) => this.setState({
+          allPokemon: json,
+          pokemon: json
+        }))
   }
 
   setAllPokemonToState = () => {
     fetch('http://localhost:3000/pokemon')
       .then((respo) => respo.json())
-        .then((json) => this.setState({pokemon: json}))
+        .then((json) => this.setState({
+          allPokemon: json,
+          pokemon: json
+        }, console.log(this.state.pokemon)))
+
   }
 
-  componentWillReceiveProps() {
-    console.log(this.state.pokemon)
+  // componentWillReceiveProps() {
+    // console.log(this.state.pokemon)
+  // }
+
+  filterByHP = (newState) => {
+    // console.log(this.state);
+    let pokemonCopy = [...this.state.allPokemon]
+    let filtered = pokemonCopy.filter((pokemon) => {
+      let hP = pokemon.stats.filter((stat) => stat.name === "hp")
+      return hP[0].value > newState
+      // debugger
+    })
+    this.setState({
+      pokemon: filtered
+    })
   }
 
   fetchPostPokemon = (pokeboi) => {
@@ -96,7 +84,7 @@ class PokemonPage extends React.Component {
           "name": "hp"
         }]
       }
-
+      // debugger
       protoObj.name = pokeboi.name
       protoObj.sprites = {front: pokeboi.frontUrl, back: pokeboi.backUrl}
       protoObj.stats[5] = {"value": pokeboi.hp, "name": "hp"}
@@ -139,6 +127,7 @@ class PokemonPage extends React.Component {
           showNoResults={false}
           // <Input />
         />
+        <Filter filterByHP={this.filterByHP} />
         <br />
         <PokemonForm fetchPostPokemon={this.fetchPostPokemon} />
         <br />

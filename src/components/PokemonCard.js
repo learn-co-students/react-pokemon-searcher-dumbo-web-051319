@@ -20,17 +20,11 @@ class PokemonCard extends React.Component {
   }
 
   flipPokeboi = () => {
-    console.log(this.state)
-    // debugger
-    if(this.state.front === true) {
-      this.setState({front: false})
-    } else {
-      this.setState({front: true})
-      }
+    this.setState({front: !this.state.front})
   }
 
   render() {
-    console.log(this.props)
+    // console.log(this.props)
     // debugger
     return (
       <Card>
